@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visual-Language Model with Reasoning</title>
+</head>
+<body>
+    <h2>Upload an Image + Ask a Question</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required><br><br>
+        <input type="text" name="question" placeholder="What is happening?" required><br><br>
+        <input type="submit" value="Analyze">
+    </form>
+
+    {% if image_path %}
+    <h3>Uploaded Image</h3>
+    <img src="{{ image_path }}" width="400"><br><br>
+
+    <h3>CLIP Predictions</h3>
+    <ul>
+        {% for label, prob in clip %}
+        <li>{{ label }} - {{ prob }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>YOLO Detected Objects</h3>
+    <ul>
+        {% for obj in yolo %}
+        <li>{{ obj }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Reasoning Graph</h3>
+    {{ graph_html|safe }}
+    {% endif %}
+</body>
+</html>
